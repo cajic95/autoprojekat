@@ -27,7 +27,7 @@ public class AppConsole {
 		
 	
 		
-		System.out.println("------------------GLAVNA PROGRAMSKA PETLJA----------------------------");
+		System.out.println("------------------GLAVNA PROGRAMSKA PETLJA------------------------------");
 		
 		Scanner in = new Scanner(System.in);
 		while(1==1) {

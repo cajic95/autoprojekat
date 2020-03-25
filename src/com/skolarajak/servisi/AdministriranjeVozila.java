@@ -2,6 +2,8 @@ package com.skolarajak.servisi;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.skolarajak.dao.VoziloDAO;
 import com.skolarajak.dao.VoziloInMemoryDAOImpl;
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vozilo;
@@ -16,9 +18,8 @@ import com.skolarajak.utils.RandomUtils;
  */
 public class AdministriranjeVozila {
 	private static double PRAG_RASPODELE_AKTIVNIH_VOZILA = 0.5;
-	private static final boolean STATUS = true;
 
-	private VoziloInMemoryDAOImpl voziloDAO;
+	private VoziloDAO voziloDAO;
 
 	public AdministriranjeVozila() {
 		voziloDAO = new VoziloInMemoryDAOImpl();
