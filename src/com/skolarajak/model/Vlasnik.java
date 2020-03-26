@@ -23,10 +23,10 @@ public class Vlasnik {
 	public void setBrojVozackeDozvole(String brojVozackeDozvole) {
 		this.brojVozackeDozvole = brojVozackeDozvole;
 	}
-	public Vozilo getVozila() {
+	public Vozilo getVozilo() {
 		return vozila;
 	}
-	public void setVozila(Vozilo vozila) {
+	public void setVozilo(Vozilo vozila) {
 		this.vozila = vozila;
 	}
 
