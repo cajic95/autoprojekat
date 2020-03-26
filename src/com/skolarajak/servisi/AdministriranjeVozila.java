@@ -3,6 +3,8 @@ package com.skolarajak.servisi;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.skolarajak.dao.VlasnikDAO;
+import com.skolarajak.dao.VlasnikInMemoryDAOImpl;
 import com.skolarajak.dao.VoziloDAO;
 import com.skolarajak.dao.VoziloInMemoryDAOImpl;
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
@@ -20,9 +22,11 @@ public class AdministriranjeVozila {
 	private static double PRAG_RASPODELE_AKTIVNIH_VOZILA = 0.5;
 
 	private VoziloDAO voziloDAO;
+	private VlasnikDAO vlasnikDAO;
 
 	public AdministriranjeVozila() {
 		voziloDAO = new VoziloInMemoryDAOImpl();
+		vlasnikDAO = new VlasnikInMemoryDAOImpl();
 	}
 
 	/**

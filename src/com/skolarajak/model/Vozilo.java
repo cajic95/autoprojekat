@@ -10,7 +10,8 @@ public class Vozilo {
 	private final int godisteProizvodnje;
 	private boolean aktivno;
 	private String registarskiBroj;
-
+	private Vlasnik vlasnik;
+	
 	private Vozilo() {
 		this.godisteProizvodnje = 0;
 	}
@@ -68,6 +69,14 @@ public class Vozilo {
 	public String toString() {
 		return "Vozilo [godisteProizvodnje=" + godisteProizvodnje + ", aktivno=" + aktivno + ", registarskiBroj="
 				+ registarskiBroj + "]";
+	}
+
+	public Vlasnik getVlasnik() {
+		return vlasnik;
+	}
+
+	public void setVlasnik(Vlasnik vlasnik) {
+		this.vlasnik = vlasnik;
 	}
 
 	/**
