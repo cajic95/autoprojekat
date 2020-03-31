@@ -46,8 +46,8 @@ public class VlasnikInMemoryDAOImpl implements VlasnikDAO {
 
 	@Override
 	public List<Vlasnik> getAll() throws ResultNotFoundException {
-		VlasnikInMemoryDAOImpl.vlasnici.values().stream().collect(Collectors.toList());
-		return null;
+		return	VlasnikInMemoryDAOImpl.vlasnici.values().stream().collect(Collectors.toList());
+	
 	}
 
 	@Override
@@ -69,5 +69,11 @@ public class VlasnikInMemoryDAOImpl implements VlasnikDAO {
 		}
 		return brojVozackeDozvole;
 		
+	}
+
+	@Override
+	public List<Vlasnik> getAllVlasniciAktivnihVozila() throws ResultNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

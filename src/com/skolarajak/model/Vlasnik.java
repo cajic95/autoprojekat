@@ -29,5 +29,13 @@ public class Vlasnik {
 	public void setVozilo(Vozilo vozila) {
 		this.vozila = vozila;
 	}
+	@Override
+	public String toString() {	
+			return " Ime: " + this.getIme()
+			+ " Prezime: " + this.getPrezime() 
+			+"Broj dozvole: " + this.getBrojVozackeDozvole();
+		}	
+	}
 
-}
+
+

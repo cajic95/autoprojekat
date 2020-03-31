@@ -11,7 +11,11 @@ public interface VoziloDAO {
 	Vozilo update(Vozilo vozilo);
 	void delete(String registarskiBroj); 
 	List<Vozilo> getAll() throws ResultNotFoundException;
+	
+	int count();
+	
 	List<Vozilo> getEuro3Vozila();
 	List<Vozilo> getAktivnaVozila();
-	int count();
+	
+	List<Vozilo> getAllVozilaCijeImeVlasnikaSadrziSlovoA();
 }
