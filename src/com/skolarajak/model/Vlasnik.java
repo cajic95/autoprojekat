@@ -4,7 +4,7 @@ public class Vlasnik {
 	private String ime;
 	private String prezime;
 	private String brojVozackeDozvole;
-	private Vozilo vozila;
+	private Vozilo vozilo;
 	public String getIme() {
 		return ime;
 	}
@@ -24,16 +24,18 @@ public class Vlasnik {
 		this.brojVozackeDozvole = brojVozackeDozvole;
 	}
 	public Vozilo getVozilo() {
-		return vozila;
+		return vozilo;
 	}
-	public void setVozilo(Vozilo vozila) {
-		this.vozila = vozila;
+	public void setVozilo(Vozilo vozilo) {
+		this.vozilo = vozilo;
 	}
 	@Override
 	public String toString() {	
 			return " Ime: " + this.getIme()
 			+ " Prezime: " + this.getPrezime() 
-			+"Broj dozvole: " + this.getBrojVozackeDozvole();
+			+" Broj dozvole- " + this.getBrojVozackeDozvole()
+			+ " Reg broj vozila: " + this.vozilo.getRegistarskiBroj()
+			+ " Status vozila: " + this.vozilo.isAktivno() ;
 		}	
 	}
 

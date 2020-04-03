@@ -58,7 +58,7 @@ public class VlasnikInMemoryDAOImpl implements VlasnikDAO {
 	private String kreirajBrojVozackeDozvole() {
 		String brojVozackeDozvole = "";
 		while(1==1) {
-			brojVozackeDozvole = "Broj dozvole-" + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo();
+			brojVozackeDozvole = RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo();
 			if(!VlasnikInMemoryDAOImpl.vlasnici.containsKey(brojVozackeDozvole)) {
 				VlasnikInMemoryDAOImpl.vlasnici.put(brojVozackeDozvole, null);
 			break;
@@ -73,7 +73,8 @@ public class VlasnikInMemoryDAOImpl implements VlasnikDAO {
 
 	@Override
 	public List<Vlasnik> getAllVlasniciAktivnihVozila() throws ResultNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		return getAll()
+				.stream().filter(v -> v.getVozilo().isAktivno())
+				.collect(Collectors.toList());
 	}
 }
