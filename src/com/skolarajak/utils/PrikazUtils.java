@@ -1,16 +1,70 @@
 package com.skolarajak.utils;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 import com.skolarajak.model.Vlasnik;
 import com.skolarajak.model.Vozilo;
 
 public class PrikazUtils {
+	private static String FILE_ROOT = "c:/tmp/izvestaj.txd";
+	public static String SEPARATOR = ";";
+	
 	public static void izlistajVozila(List<Vozilo> vozila) {
 		vozila.forEach(PrikazUtils::printVozilo);
 			}
 	public static void izlistajVlasnici(List<Vlasnik> vlasnici) {
 		vlasnici.forEach(PrikazUtils::printVlasnik);
 		}
+	public static void izlistajVlasnikeUDatoteku(List<Vlasnik> vlasnici) throws IOException {
+		
+	
+		Path path = Paths.get(FILE_ROOT);
+		 
+		//Use try-with-resource to get auto-closeable writer instance
+		try (BufferedWriter writer = Files.newBufferedWriter(path)) 
+		{	for(Vlasnik v : vlasnici) {
+		    writer.write(v.toString());
+		    writer.newLine();
+			}
+		}
+	}
+	public static void izlistajVozilaIzDatoteke(List<Vozilo> vozila) throws IOException {
+		
+		Class clazz = Vozilo.class;
+		Field[] fields = clazz.getDeclaredFields();
+		for (Field field : fields) {
+			System.out.println("fieldName: " + field.getName()+ ", fieldType: " +field.getType());
+		}
+		Path path = Paths.get(FILE_ROOT);
+		String thisLine;
+		//Use try-with-resource to get auto-closeable writer instance
+		try (BufferedReader reader = Files.newBufferedReader(path)) 
+		{	for(Vozilo v : vozila) {
+		   
+		while ((thisLine = reader.readLine())!= null ) {
+			System.out.println("**********" + thisLine);
+				}
+			}
+		}
+	}
+	public static void izlistajVozilaUDatoteku(List<Vozilo> vozila) throws IOException {
+		Path path = Paths.get(FILE_ROOT);
+		 
+		//Use try-with-resource to get auto-closeable writer instance
+		try (BufferedWriter writer = Files.newBufferedWriter(path/*, StandardOpenOption.APPEND)*/)) 
+		{	for(Vozilo v : vozila) {
+		    writer.write(v.toString());
+		    writer.newLine();
+			}
+		}
+	}
 	public static void printVozilo(Vozilo vozilo) {
 		System.out.println(vozilo.toString());
 	}

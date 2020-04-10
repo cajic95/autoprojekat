@@ -1,5 +1,7 @@
 package com.skolarajak.model;
 
+import com.skolarajak.utils.PrikazUtils;
+
 /**
  * Model klasa Vozila.
  * 
@@ -12,7 +14,7 @@ public class Vozilo {
 	private String registarskiBroj;
 	private Vlasnik vlasnik;
 	
-	private Vozilo() {
+	public Vozilo() {
 		this.godisteProizvodnje = 0;
 	}
 
@@ -70,6 +72,12 @@ public class Vozilo {
 		return "Godiste: " + this.getGodisteProizvodnje() + " Aktivno: " + this.isAktivno()
 		+ " Registarski broj: " + this.getRegistarskiBroj()
 		+ " Ime vlasnika: " + this.vlasnik.getIme();
+	}
+	public String toCSV() {
+		return this.getGodisteProizvodnje() + PrikazUtils.SEPARATOR 
+		+ this.isAktivno() + PrikazUtils.SEPARATOR
+		+ this.getRegistarskiBroj() + PrikazUtils.SEPARATOR
+		+ this.vlasnik.getIme();
 	}
 
 	public Vlasnik getVlasnik() {

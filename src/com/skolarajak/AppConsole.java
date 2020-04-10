@@ -1,5 +1,6 @@
 package com.skolarajak;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -19,7 +20,7 @@ import com.skolarajak.utils.PrikazUtils;
 public class AppConsole {
 	static final AdministriranjeVozila administracijaVozila = new AdministriranjeVozila();
 	
-	public static void main(String[] args) throws ResultNotFoundException {
+	public static void main(String[] args) throws ResultNotFoundException, IOException {
 		Date datum = new Date();
 		System.out.println("Pocetak rada aplikacije: " + datum.toString());
 		
@@ -74,17 +75,20 @@ public class AppConsole {
 		System.out.println("Ukupno vlasnika " );
 		PrikazUtils.izlistajVlasnici(vlasnici);
 	}
-	private static void opcija4() throws ResultNotFoundException {
+	private static void opcija4() throws ResultNotFoundException, IOException {
 		List<Vlasnik> vlasnici = administracijaVozila.dajSveVlasnikeAktivnihVozila();
 		System.out.println("=======IZLISTAJ VLASNIKE AKTIVNIH VOZILA==========");
 		System.out.println("Ukupno vlasnika " + vlasnici.size() );
 		PrikazUtils.izlistajVlasnici(vlasnici);
+		PrikazUtils.izlistajVlasnikeUDatoteku(vlasnici);
 	}
-	private static void opcija5() throws ResultNotFoundException {
+	private static void opcija5() throws ResultNotFoundException, IOException {
 		List<Vozilo> vozila = administracijaVozila.dajSvaVozilaCijeImeVlasnikaSadrziSlovoA();
 		System.out.println("=======IZLISTAJ SVA VOZILA CIJE IME VLASNIKA SADRZI SLOVO A==========");
 		System.out.println("Ukupno vlasnika " + vozila.size());
 		PrikazUtils.izlistajVozila(vozila);
+		PrikazUtils.izlistajVozilaUDatoteku(vozila);
+		PrikazUtils.izlistajVozilaIzDatoteke(vozila);
 	}
 	private static void prikaziOpcije() {
 		System.out.println("------------------------");

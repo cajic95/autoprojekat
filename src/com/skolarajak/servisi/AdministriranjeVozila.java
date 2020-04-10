@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.skolarajak.dao.VlasnikDAO;
+import com.skolarajak.dao.VlasnikFileSystemDAO;
 import com.skolarajak.dao.VlasnikInMemoryDAOImpl;
 import com.skolarajak.dao.VoziloDAO;
 import com.skolarajak.dao.VoziloInMemoryDAOImpl;
@@ -26,7 +27,7 @@ public class AdministriranjeVozila {
 	private VlasnikDAO vlasnikDAO;// deklarisanje dao-a(samo interfejs) jer ne zelimo da klasa nigde osim u konstruktoru ne poznaje konkretnu implementaciju
 	public AdministriranjeVozila() {
 		voziloDAO = new VoziloInMemoryDAOImpl();
-		vlasnikDAO = new VlasnikInMemoryDAOImpl();
+		vlasnikDAO = new VlasnikFileSystemDAO();
 	}
 
 	/**
@@ -47,17 +48,24 @@ public class AdministriranjeVozila {
 				Vlasnik vlasnik = new Vlasnik();
 				vlasnik = vlasnikDAO.create(vlasnik);
 				vlasnik.setVozilo(zadnjeVozilo);
+				
 				vlasnik = vlasnikDAO.update(vlasnik);
+				
 				zadnjeVozilo.setVlasnik(vlasnik);
 				zadnjeVozilo = voziloDAO.update(zadnjeVozilo);// DAO se poziva svaki put kada zeliti da promenjeno stanje sacuvate u skladistu
 			}
 			
 			System.out.println("Vlasnik: " 
 			+ zadnjeVozilo.getVlasnik().getIme() + " " 
-			+ zadnjeVozilo.getVlasnik().getPrezime() );
+			+ zadnjeVozilo.getVlasnik().getPrezime() 
+			+ zadnjeVozilo.getVlasnik().getBrojVozackeDozvole());
 			
 			System.out.println("UKUPNO reg brojeva: " + voziloDAO.count());
-
+			Vlasnik zadnjiVlasnik = zadnjeVozilo.getVlasnik();
+			Vlasnik ucitaniVlasnik = vlasnikDAO.read(zadnjiVlasnik.getBrojVozackeDozvole());
+			
+			System.out.println(zadnjiVlasnik.getBrojVozackeDozvole() + " " + zadnjiVlasnik.getPrezime() + "----" + ucitaniVlasnik.getPrezime());
+			
 			vozila = voziloDAO.getAll();
 
 		} catch (ResultNotFoundException e) {
