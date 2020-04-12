@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vlasnik;
@@ -71,20 +73,31 @@ public class VlasnikFileSystemDAO implements VlasnikDAO {
 
 	@Override
 	public List<Vlasnik> getAll() throws ResultNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Vlasnik> vlasnici = new ArrayList<Vlasnik>();
+
+		File[] files = new File(FILE_ROOT).listFiles();
+		//If this pathname does not denote a directory, then listFiles() returns null. 
+
+		for (File file : files) {
+		    if (file.isFile()) {
+		    	String fileName = file.getName();
+		    	String brojVozackeDozvole = fileName.substring(0,fileName.lastIndexOf("."));
+		        vlasnici.add(this.read(brojVozackeDozvole));
+		    }
+		}
+		return vlasnici;
 	}
 
 	@Override
-	public int count() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int count() throws ResultNotFoundException {
+		return getAll().size();
 	}
 
 	@Override
 	public List<Vlasnik> getAllVlasniciAktivnihVozila() throws ResultNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		return getAll()
+				.stream().filter(v -> v.getVozilo().isAktivno())
+				.collect(Collectors.toList());
 	}
 	private String getFileName(String brojVozackeDozvole) {
 		return FILE_ROOT + brojVozackeDozvole + EXTENZIJA;

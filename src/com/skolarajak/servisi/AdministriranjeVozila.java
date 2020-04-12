@@ -7,6 +7,7 @@ import com.skolarajak.dao.VlasnikDAO;
 import com.skolarajak.dao.VlasnikFileSystemDAO;
 import com.skolarajak.dao.VlasnikInMemoryDAOImpl;
 import com.skolarajak.dao.VoziloDAO;
+import com.skolarajak.dao.VoziloFileSystemDAO;
 import com.skolarajak.dao.VoziloInMemoryDAOImpl;
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vlasnik;
@@ -25,8 +26,9 @@ public class AdministriranjeVozila {
 
 	private VoziloDAO voziloDAO;
 	private VlasnikDAO vlasnikDAO;// deklarisanje dao-a(samo interfejs) jer ne zelimo da klasa nigde osim u konstruktoru ne poznaje konkretnu implementaciju
+	
 	public AdministriranjeVozila() {
-		voziloDAO = new VoziloInMemoryDAOImpl();
+		voziloDAO = new VoziloFileSystemDAO();
 		vlasnikDAO = new VlasnikFileSystemDAO();
 	}
 
@@ -61,6 +63,7 @@ public class AdministriranjeVozila {
 			+ zadnjeVozilo.getVlasnik().getBrojVozackeDozvole());
 			
 			System.out.println("UKUPNO reg brojeva: " + voziloDAO.count());
+			System.out.println("UKUPNO vlasnika: " + vlasnikDAO.count());
 			Vlasnik zadnjiVlasnik = zadnjeVozilo.getVlasnik();
 			Vlasnik ucitaniVlasnik = vlasnikDAO.read(zadnjiVlasnik.getBrojVozackeDozvole());
 			
@@ -76,14 +79,14 @@ public class AdministriranjeVozila {
 		return vozila;
 	}
 
-	public List<Vozilo> euro3Vozila() {
+	public List<Vozilo> euro3Vozila() throws ResultNotFoundException {
 
 		List<Vozilo> euro3Vozila = voziloDAO.getEuro3Vozila();
 
 		return euro3Vozila; // vrati euro 3 vozila
 	}
 
-	public List<Vozilo> aktivnaVozila() {
+	public List<Vozilo> aktivnaVozila() throws ResultNotFoundException {
 		List<Vozilo> aktivnaVozila = voziloDAO.getAktivnaVozila();
 
 		return aktivnaVozila;
