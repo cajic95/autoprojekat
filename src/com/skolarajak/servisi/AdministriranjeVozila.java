@@ -49,6 +49,11 @@ public class AdministriranjeVozila {
 				zadnjeVozilo = voziloDAO.create(vozilo);
 				
 				Vlasnik vlasnik = new Vlasnik();
+				
+				vlasnik.setIme(RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo());
+				vlasnik.setPrezime(RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo() + RandomUtils.slucajnoSlovo());
+				vlasnik.setBrojVozackeDozvole(String.valueOf(System.currentTimeMillis()));
+				
 				vlasnik = vlasnikDAO.create(vlasnik);
 				vlasnik.setVozilo(zadnjeVozilo);
 				
@@ -60,7 +65,7 @@ public class AdministriranjeVozila {
 			
 			System.out.println("Vlasnik: " 
 			+ zadnjeVozilo.getVlasnik().getIme() + " " 
-			+ zadnjeVozilo.getVlasnik().getPrezime() 
+			+ zadnjeVozilo.getVlasnik().getPrezime() + " "
 			+ zadnjeVozilo.getVlasnik().getBrojVozackeDozvole());
 			
 			System.out.println("UKUPNO reg brojeva: " + voziloDAO.count());

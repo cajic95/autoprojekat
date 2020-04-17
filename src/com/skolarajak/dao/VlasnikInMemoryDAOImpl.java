@@ -51,7 +51,7 @@ public class VlasnikInMemoryDAOImpl implements VlasnikDAO {
 	}
 
 	@Override
-	public int count() {
+	public long count() {
 		return 		VlasnikInMemoryDAOImpl.vlasnici.keySet().size();
 
 	}

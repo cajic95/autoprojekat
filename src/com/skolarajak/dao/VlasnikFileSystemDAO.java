@@ -89,7 +89,7 @@ public class VlasnikFileSystemDAO implements VlasnikDAO {
 	}
 
 	@Override
-	public int count() throws ResultNotFoundException {
+	public long count() throws ResultNotFoundException {
 		return getAll().size();
 	}
 
