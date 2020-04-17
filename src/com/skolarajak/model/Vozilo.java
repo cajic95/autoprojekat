@@ -9,7 +9,7 @@ import com.skolarajak.utils.PrikazUtils;
  *
  */
 public class Vozilo {
-	private final int godisteProizvodnje;
+	private  int godisteProizvodnje;
 	private boolean aktivno;
 	private String registarskiBroj;
 	private Vlasnik vlasnik;
@@ -29,6 +29,10 @@ public class Vozilo {
 	 */
 	public int getGodisteProizvodnje() {
 		return godisteProizvodnje;
+	}
+
+	public void setGodisteProizvodnje(int godisteProizvodnje) {
+		this.godisteProizvodnje = godisteProizvodnje;
 	}
 
 	/**
