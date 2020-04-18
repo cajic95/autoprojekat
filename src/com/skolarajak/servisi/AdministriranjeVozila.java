@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.skolarajak.dao.VlasnikDAO;
-import com.skolarajak.dao.VlasnikDBDAO;
+import com.skolarajak.dao.VlasnikDBDAOImpl;
 import com.skolarajak.dao.VlasnikFileSystemDAO;
 import com.skolarajak.dao.VlasnikInMemoryDAOImpl;
 import com.skolarajak.dao.VoziloDAO;
+import com.skolarajak.dao.VoziloDBDAOImpl;
 import com.skolarajak.dao.VoziloFileSystemDAO;
 import com.skolarajak.dao.VoziloInMemoryDAOImpl;
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
@@ -28,9 +29,13 @@ public class AdministriranjeVozila {
 	private VoziloDAO voziloDAO;
 	private VlasnikDAO vlasnikDAO;// deklarisanje dao-a(samo interfejs) jer ne zelimo da klasa nigde osim u konstruktoru ne poznaje konkretnu implementaciju
 	
-	public AdministriranjeVozila() {
-		voziloDAO = new VoziloFileSystemDAO();
-		vlasnikDAO = new VlasnikDBDAO();
+	public AdministriranjeVozila() throws ClassNotFoundException {
+		try {
+			voziloDAO = new VoziloDBDAOImpl();
+			vlasnikDAO = new VlasnikDBDAOImpl();
+	} catch (ClassNotFoundException e) {
+		e.printStackTrace();
+		}
 	}
 
 	/**
@@ -46,7 +51,7 @@ public class AdministriranjeVozila {
 				int godinaProizvodnje = dodeliGodinuProizvodnje();
 				Vozilo vozilo = new Vozilo(godinaProizvodnje);
 				vozilo.setAktivno(randomBoolean());
-				zadnjeVozilo = voziloDAO.create(vozilo);
+				
 				
 				Vlasnik vlasnik = new Vlasnik();
 				
@@ -55,14 +60,15 @@ public class AdministriranjeVozila {
 				vlasnik.setBrojVozackeDozvole(String.valueOf(System.currentTimeMillis()));
 				
 				vlasnik = vlasnikDAO.create(vlasnik);
+				vozilo.setVlasnik(vlasnik);
+				zadnjeVozilo = voziloDAO.create(vozilo);
+				 
 				vlasnik.setVozilo(zadnjeVozilo);
 				
 				vlasnik = vlasnikDAO.update(vlasnik);
 				
-				zadnjeVozilo.setVlasnik(vlasnik);
 				zadnjeVozilo = voziloDAO.update(zadnjeVozilo);// DAO se poziva svaki put kada zeliti da promenjeno stanje sacuvate u skladistu
 			}
-			
 			System.out.println("Vlasnik: " 
 			+ zadnjeVozilo.getVlasnik().getIme() + " " 
 			+ zadnjeVozilo.getVlasnik().getPrezime() + " "

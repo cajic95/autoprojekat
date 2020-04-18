@@ -9,9 +9,10 @@ import java.util.List;
 
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vlasnik;
+import com.skolarajak.model.Vozilo;
 import com.skolarajak.utils.RandomUtils;
 
-public class VlasnikDBDAO implements VlasnikDAO {
+public class VlasnikDBDAOImpl implements VlasnikDAO {
 
 	@Override
 	public Vlasnik create(Vlasnik vlasnik) {
@@ -44,12 +45,14 @@ public class VlasnikDBDAO implements VlasnikDAO {
 	@Override
 	public Vlasnik read(String brojVozackeDozvole) throws ResultNotFoundException {
 		Vlasnik vlasnik = new Vlasnik();
+		Vozilo vozilo = new Vozilo();
 		try {
 			// create a mysql database connection
 			Connection conn = getConnection();
 
 			// the mysql insert statement
-			String query = " select * from vlasnik where brojVozackeDozvole=?";
+			String query = "select * from vlasnik, vozilo where brojVozackeDozvole=?" 
+			+ " and vlasnik.id = vozilo.vlasnikId";
 
 			// create the mysql insert preparedstatement
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -64,6 +67,12 @@ public class VlasnikDBDAO implements VlasnikDAO {
 				vlasnik.setBrojVozackeDozvole(brojVozackeDozvole);
 				vlasnik.setIme(rs.getString("ime"));
 				vlasnik.setPrezime(rs.getString("prezime"));
+				
+				vozilo.setRegistarskiBroj(rs.getString("regbroj"));
+				vozilo.setGodisteProizvodnje(rs.getInt("godisteProzivodnje"));
+				vozilo.setAktivno(rs.getBoolean("status"));
+				
+				vlasnik.setVozilo(vozilo); 
 			}
 			rs.close();
 			preparedStmt.close();
