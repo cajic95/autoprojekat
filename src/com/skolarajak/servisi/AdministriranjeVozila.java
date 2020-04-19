@@ -29,13 +29,14 @@ public class AdministriranjeVozila {
 	private VoziloDAO voziloDAO;
 	private VlasnikDAO vlasnikDAO;// deklarisanje dao-a(samo interfejs) jer ne zelimo da klasa nigde osim u konstruktoru ne poznaje konkretnu implementaciju
 	
-	public AdministriranjeVozila() throws ClassNotFoundException {
-		try {
+	public AdministriranjeVozila() {
+	
+		try{ 
 			voziloDAO = new VoziloDBDAOImpl();
-			vlasnikDAO = new VlasnikDBDAOImpl();
-	} catch (ClassNotFoundException e) {
-		e.printStackTrace();
-		}
+		vlasnikDAO = new VlasnikDBDAOImpl();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}	
 	}
 
 	/**
@@ -50,6 +51,7 @@ public class AdministriranjeVozila {
 			for (int i = 0; i < Konstante.UKUPAN_BROJ_VOZILA_U_SISTEMU; i++) {
 				int godinaProizvodnje = dodeliGodinuProizvodnje();
 				Vozilo vozilo = new Vozilo(godinaProizvodnje);
+				vozilo.setRegistarskiBroj(String.valueOf(System.currentTimeMillis()));
 				vozilo.setAktivno(randomBoolean());
 				
 				
