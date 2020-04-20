@@ -12,7 +12,7 @@ public interface VoziloDAO {
 	void delete(String registarskiBroj); 
 	List<Vozilo> getAll() throws ResultNotFoundException;
 	
-	int count() throws ResultNotFoundException;
+	long count() throws ResultNotFoundException;
 	
 	List<Vozilo> getEuro3Vozila() throws ResultNotFoundException;
 	List<Vozilo> getAktivnaVozila() throws ResultNotFoundException;

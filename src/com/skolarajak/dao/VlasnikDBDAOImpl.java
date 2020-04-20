@@ -14,13 +14,12 @@ import com.skolarajak.utils.RandomUtils;
 import com.skolarajak.utils.DBUtils;
 
 public class VlasnikDBDAOImpl implements VlasnikDAO {
-	
-	 public VlasnikDBDAOImpl() throws ClassNotFoundException {
-		// TODO Auto-generated constructor stub
-		 
-		 Class.forName(DBUtils.myDriver);
-	}
 
+	public VlasnikDBDAOImpl() throws ClassNotFoundException {
+		// TODO Auto-generated constructor stub
+
+		Class.forName(DBUtils.myDriver);
+	}
 
 	@Override
 	public Vlasnik create(Vlasnik vlasnik) {
@@ -59,8 +58,8 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 			Connection conn = getConnection();
 
 			// the mysql inser t statement
-			String query = "select * from vlasnik, vozilo where brojVozackeDozvole=?" 
-			+ " and vlasnik.brojVozackeDozvole = vozilo.vlasnikId";
+			String query = "select * from vlasnik, vozilo where brojVozackeDozvole=?"
+					+ " and vlasnik.brojVozackeDozvole = vozilo.vlasnikId";
 
 			// create the mysql insert preparedstatement
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -71,19 +70,19 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
-				
+
 				vlasnik.setBrojVozackeDozvole(brojVozackeDozvole);
 				vlasnik.setIme(rs.getString("ime"));
 				vlasnik.setPrezime(rs.getString("prezime"));
-				
+
 				vozilo.setRegistarskiBroj(rs.getString("regbroj"));
-				vozilo.setGodisteProizvodnje(rs.getInt("godisteProzivodnje"));
+				vozilo.setGodisteProizvodnje(rs.getInt("godisteProizvodnje"));
 				vozilo.setAktivno(rs.getBoolean("status"));
 				vozilo.setVlasnik(vlasnik);
-				vlasnik.setVozilo(vozilo); 
+				vlasnik.setVozilo(vozilo);
 			}
 			rs.close();
-			preparedStmt.close(); 
+			preparedStmt.close();
 			conn.close();
 		} catch (Exception e) {
 			System.err.println("Got an exception!");
@@ -91,12 +90,11 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 		}
 		return vlasnik;
 	}
-
+	
 	@Override
 	public Vlasnik update(Vlasnik vlasnik) {
 		try {
 			// create a mysql database connection
-
 			Connection conn = getConnection();
 
 			// the mysql insert statement
@@ -104,7 +102,7 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 
 			// create the mysql insert preparedstatement
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			
+
 			preparedStmt.setString(1, vlasnik.getIme());
 			preparedStmt.setString(2, vlasnik.getPrezime());
 			preparedStmt.setString(3, vlasnik.getBrojVozackeDozvole());
@@ -119,7 +117,6 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 		return vlasnik;
 	}
 	
-
 	@Override
 	public void delete(String brojVozackeDozvole) {
 		try {
@@ -132,8 +129,7 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 
 			// create the mysql insert preparedstatement
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			
-			
+
 			preparedStmt.setString(1, brojVozackeDozvole);
 			// execute the preparedstatement
 			preparedStmt.execute();
@@ -143,9 +139,8 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
 		}
-	
 	}
-
+	
 	@Override
 	public List<Vlasnik> getAll() throws ResultNotFoundException {
 		// TODO Auto-generated method stub
@@ -165,11 +160,11 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 			// execute the preparedstatement
 
 			ResultSet rs = preparedStmt.executeQuery();
-			
+
 			while (rs.next()) {
-				
-			count = rs.getLong("broj");
-			
+
+				count = rs.getLong("broj");
+
 			}
 			rs.close();
 			preparedStmt.close();
@@ -177,7 +172,8 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			System.err.println(e.getMessage());
-		}			return count;
+		}
+		return count;
 	}
 
 	@Override
@@ -187,8 +183,7 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 	}
 
 	private Connection getConnection() throws ClassNotFoundException, SQLException {
-	
-		
+
 		return DriverManager.getConnection(DBUtils.myUrl, "root", "root");
 	}
 }

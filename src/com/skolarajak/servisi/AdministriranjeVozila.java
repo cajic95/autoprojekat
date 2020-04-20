@@ -81,10 +81,12 @@ public class AdministriranjeVozila {
 			Vlasnik zadnjiVlasnik = zadnjeVozilo.getVlasnik();
 			Vlasnik ucitaniVlasnik = vlasnikDAO.read(zadnjiVlasnik.getBrojVozackeDozvole());
 			
+			Vozilo nekoVozilo = voziloDAO.read(ucitaniVlasnik.getVozilo().getRegistarskiBroj());
+			
 			System.out.println(zadnjiVlasnik.getBrojVozackeDozvole() + " " + zadnjiVlasnik.getPrezime() + "----" + ucitaniVlasnik.getPrezime());
 			
 			vozila = voziloDAO.getAll();
-
+ 
 		} catch (ResultNotFoundException e) {
 			System.out.println(e.getMessage());
 			System.out.println("OBRISANO");

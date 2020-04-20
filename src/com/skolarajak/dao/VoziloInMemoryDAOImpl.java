@@ -60,7 +60,7 @@ public class VoziloInMemoryDAOImpl implements VoziloDAO {
 	}
 
 	@Override
-	public int count() {
+	public long count() {
 		return  VoziloInMemoryDAOImpl.registrovanaVozila.keySet().size();
 		
 	}

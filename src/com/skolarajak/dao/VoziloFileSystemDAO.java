@@ -92,7 +92,7 @@ public class VoziloFileSystemDAO implements VoziloDAO {
 	}
 
 	@Override
-	public int count() throws ResultNotFoundException {
+	public long count() throws ResultNotFoundException {
 		// TODO Auto-generated method stub
 		return this.getAll().size();
 	}
