@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
@@ -150,8 +151,42 @@ public class VoziloDBDAOImpl implements VoziloDAO {
 
 	@Override
 	public List<Vozilo> getAll() throws ResultNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+	List<Vozilo> vozila = new ArrayList<>();
+		
+		try {
+			// create a mysql database connection
+			Connection conn = getConnection();
+
+			// the mysql inser t statement
+			String query = "select * from vlasnik, vozilo where vlasnik.brojVozackeDozvole = vozilo.vlasnikId";
+
+			// create the mysql insert preparedstatement
+			PreparedStatement preparedStmt = conn.prepareStatement(query);			
+
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				Vlasnik vlasnik = new Vlasnik();
+				Vozilo vozilo = new Vozilo();
+				vlasnik.setBrojVozackeDozvole(rs.getString("brojVozackeDozvole"));
+				vlasnik.setIme(rs.getString("ime"));
+				vlasnik.setPrezime(rs.getString("prezime"));
+
+				vozilo.setRegistarskiBroj(rs.getString("regbroj"));
+				vozilo.setGodisteProizvodnje(rs.getInt("godisteProizvodnje"));
+				vozilo.setAktivno(rs.getBoolean("status"));
+				vozilo.setVlasnik(vlasnik);
+				vlasnik.setVozilo(vozilo);
+				
+				vozila.add(vozilo);
+			}
+			rs.close();
+			preparedStmt.close();
+			conn.close();
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			System.err.println(e.getMessage());
+		}
+		return vozila;
 	}
 
 	@Override
