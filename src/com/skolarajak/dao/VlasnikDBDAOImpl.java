@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.skolarajak.dao.datasource.C3poDataSource;
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vlasnik;
 import com.skolarajak.model.Vozilo;
@@ -254,7 +255,7 @@ public class VlasnikDBDAOImpl implements VlasnikDAO {
 	}
 
 	private Connection getConnection() throws ClassNotFoundException, SQLException {
-
-		return DriverManager.getConnection(DBUtils.myUrl, "root", "root");
+		return C3poDataSource.getConnection();
+		//return DriverManager.getConnection(DBUtils.myUrl, "root", "root");
 	}
 }

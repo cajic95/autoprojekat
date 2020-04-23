@@ -8,11 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.skolarajak.dao.datasource.C3poDataSource;
 import com.skolarajak.exceptions.dao.ResultNotFoundException;
 import com.skolarajak.model.Vlasnik;
 import com.skolarajak.model.Vozilo;
 import com.skolarajak.utils.DBUtils;
 import com.skolarajak.utils.Konstante;
+import com.skolarajak.utils.SysUtils;
 
 public class VoziloDBDAOImpl implements VoziloDAO {
 	public VoziloDBDAOImpl() throws ClassNotFoundException {
@@ -304,9 +306,9 @@ public class VoziloDBDAOImpl implements VoziloDAO {
 		List<Vozilo> vozila = new ArrayList<>();
 
 		try {
-			// create a mysql database connection
+			long startTime = System.currentTimeMillis();
 			Connection conn = getConnection();
-
+			SysUtils.printDuration(startTime);
 			// the mysql inser t statement
 			String query = "select * from vlasnik, vozilo where vlasnik.brojVozackeDozvole = vozilo.vlasnikId" 
 			+" and lower(vlasnik.ime) like '%a%'";
@@ -341,7 +343,7 @@ public class VoziloDBDAOImpl implements VoziloDAO {
 	}
 
 	private Connection getConnection() throws ClassNotFoundException, SQLException {
-
-		return DriverManager.getConnection(DBUtils.myUrl, "root", "root");
+		return C3poDataSource.getConnection();
+		//return DriverManager.getConnection(DBUtils.myUrl, "root", "root");
 	}
 }
